@@ -18,7 +18,7 @@ RM = rm -f
 
 CFLAGS = -Wall -Wextra -Werror
 
-AR = ar rcs
+AR = ar rc
 
 SRCS = ft_printf.c ft_printf_utiles.c ft_strchr.c
 	
@@ -33,12 +33,10 @@ $(NAME): $(OBJ_M)
 
 all: $(NAME)
 
-bonus: all
-
 clean:
 	$(RM) $(OBJ_M)
 
 fclean: clean
 		$(RM) $(NAME)
 
-re: fclean bonus all
+re: fclean all

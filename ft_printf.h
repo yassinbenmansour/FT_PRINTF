@@ -15,8 +15,6 @@
 
 # define HEX_LOW "0123456789abcdef"
 # define HEX_UPP "0123456789ABCDEF"
-# define UNS_LL unsigned long long
-# define BASE &"0123456789abcdef"
 # define DIGITS "0123456789"
 
 # include <limits.h>
@@ -30,7 +28,7 @@ int		ft_printf(const char *str, ...);
 int		get_printed(const char fs, va_list arg);
 int		ft_putchar(char c);
 int		ft_putstr(char *s);
-int		ft_put_ptr(UNS_LL data);
+int		ft_put_ptr(unsigned long long data);
 int		ft_putnbr_base(long long data, char *bs, char fs);
 int		ft_put_unsigned(unsigned int data);
 

@@ -24,50 +24,33 @@ int	ft_putstr(char *s)
 	i = 0;
 	if (!s)
 		return (ft_putstr("(null)"));
-	while (*s)
-	{
-		i += ft_putchar(*s);
-		s++;
-	}
+	while (s[i])
+		ft_putchar(s[i++]);
 	return (i);
 }
 
-int	ft_put_ptr(UNS_LL data)
+int	ft_putnbr_base(long long data, char *base, char format_specifier)
 {
 	int	printed;
+	int	base_len;
 
 	printed = 0;
-	if (data > 15)
+	if (format_specifier == 'd' || format_specifier == 'i')
 	{
-		printed += ft_put_ptr(data / 16);
-		printed += write(1, BASE[data % 16], 1);
-		return (printed);
+		base_len = 10;
 	}
-	return (write(1, BASE[data % 16], 1));
-}
-
-int	ft_putnbr_base(long long data, char *bs, char fs)
-{
-	int	printed;
-	int	base;
-
-	printed = 0;
-	if (fs == 'd' || fs == 'i')
-		base = 10;
 	else
-		base = 16;
+	{
+		base_len = 16;
+	}
 	if (data < 0)
 	{
-		printed += write(1, "-", 1);
-		data *= (-1);
+		printed += ft_putchar('-');
+		data = -data;
 	}
-	if (data >= base)
-	{
-		printed += ft_putnbr_base(data / base, bs, fs);
-		printed += write(1, &bs[data % base], 1);
-		return (printed);
-	}
-	return (write(1, &bs[data % base], 1) + printed);
+	if (data >= base_len)
+		printed += ft_putnbr_base(data / base_len, base, format_specifier);
+	return (printed + ft_putchar(base[data % base_len]));
 }
 
 int	ft_put_unsigned(unsigned int data)
@@ -75,11 +58,17 @@ int	ft_put_unsigned(unsigned int data)
 	int	printed;
 
 	printed = 0;
-	if (data > 9)
-	{
+	if (data >= 10)
 		printed += ft_put_unsigned(data / 10);
-		printed += ft_putchar((data % 10) + '0');
-		return (printed);
-	}
-	return (ft_putchar((data % 10) + '0'));
+	return (printed + ft_putchar((data % 10) + '0'));
+}
+
+int	ft_put_ptr(unsigned long long data)
+{
+	int	printed;
+
+	printed = 0;
+	if (data >= 16)
+		printed += ft_put_ptr(data / 16);
+	return (printed + ft_putchar(HEX_LOW[data % 16]));
 }
